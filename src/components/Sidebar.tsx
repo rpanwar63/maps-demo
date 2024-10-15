@@ -24,25 +24,39 @@ const Sidebar = ({
             <Autocomplete
                 fullWidth
                 disablePortal
-                options={MARKERS.filter(
-                    item => item.id !== Number(direction?.id)
-                )}
+                options={[
+                    { id: 0, title: "Current Location", lat: 0, lng: 0 },
+                    ...MARKERS,
+                ].filter(item => item.id !== Number(direction?.id))}
                 renderInput={params => <TextField {...params} label="Source" />}
                 getOptionLabel={option => option.title}
                 value={source}
                 onChange={(_default, val) => {
                     setSource(val ? (val as IMarker) : undefined);
+                    if (val?.id === 0) {
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(pos => {
+                                updateDirectionSource({
+                                    lat: pos.coords.latitude,
+                                    long: pos.coords.longitude,
+                                });
+                            });
+                        }
+                        return;
+                    }
                     updateDirectionSource(
                         val ? { lat: val.lat, long: val.lng } : null
                     );
                 }}
             />
-            {/* <Divider sx={{ mt: 2, mb: 2 }} /> */}
             <Autocomplete
                 sx={{ mt: 2 }}
                 fullWidth
                 disablePortal
-                options={MARKERS.filter(item => item.id !== Number(source?.id))}
+                options={[
+                    { id: 0, title: "Current Location", lat: 0, lng: 0 },
+                    ...MARKERS,
+                ].filter(item => item.id !== Number(source?.id))}
                 renderInput={params => (
                     <TextField {...params} label="Destination" />
                 )}
@@ -50,6 +64,17 @@ const Sidebar = ({
                 value={source}
                 onChange={(_default, val) => {
                     setDirection(val ? (val as IMarker) : undefined);
+                    if (val?.id === 0) {
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(pos => {
+                                updateDirectionDestination({
+                                    lat: pos.coords.latitude,
+                                    long: pos.coords.longitude,
+                                });
+                            });
+                        }
+                        return;
+                    }
                     updateDirectionDestination(
                         val ? { lat: val.lat, long: val.lng } : null
                     );
