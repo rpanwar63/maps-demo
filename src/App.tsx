@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import "./App.css";
+import Map from "./components/Map";
+import Sidebar from "./components/Sidebar";
+export type MarkerType = {
+    id: number;
+    cord: { lat: number; long: number };
+    text: string;
+};
+const defaultCenter = {
+    lat: 22.9734,
+    lng: 78.6569,
+};
+export type Markers = MarkerType[];
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [dirSource, setDirSource] = useState<{
+        lat: number;
+        lng: number;
+    } | null>(null);
+    const [dirDestination, setDirDestination] = useState<{
+        lat: number;
+        lng: number;
+    } | null>(null);
+    const updateDirectionSource = (
+        source: { lat: number; long: number } | null
+    ) => {
+        setDirSource(source ? { lat: source.lat, lng: source.long } : null);
+    };
+    const updateDirectionDestination = (
+        source: { lat: number; long: number } | null
+    ) => {
+        setDirDestination(
+            source ? { lat: source.lat, lng: source.long } : null
+        );
+    };
+    return (
+        <div className="App">
+            <Sidebar
+                updateDirectionSource={updateDirectionSource}
+                updateDirectionDestination={updateDirectionDestination}
+            />
+            <Map
+                center={defaultCenter}
+                directionSource={dirSource}
+                directionDestination={dirDestination}
+            />
+        </div>
+    );
 }
 
 export default App;
