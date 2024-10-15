@@ -18,3 +18,40 @@ body {
 .gm-style-iw-d {
     overflow: auto !important;
 }
+.swiper-button-next,
+.swiper-button-prev {
+    background: white;
+    height: 32px !important;
+    width: 32px !important;
+    padding: 0 !important;
+    border-radius: 50%;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 18px !important;
+    font-weight: 700;
+    color: black;
+}
+.infowindow-content {
+    box-sizing: content-box;
+}
+.infowindow-content::-webkit-scrollbar {
+    width: 5px;
+}
+.infowindow-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.infowindow-content::-webkit-scrollbar-thumb {
+    background: #888;
+}
+.infowindow-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+.gm-style-iw-chr {
+    /* display: none; */
+}
+/* .gm-style .gm-style-iw-c {
+    position: fixed !important;
+    height: 100vh !important;
+    z-index: 2;
+} */

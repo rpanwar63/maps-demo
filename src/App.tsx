@@ -8,8 +8,8 @@ export type MarkerType = {
     text: string;
 };
 const defaultCenter = {
-    lat: 22.9734,
-    lng: 78.6569,
+    lat: 19.117372778034447,
+    lng: 72.86934443447336,
 };
 export type Markers = MarkerType[];
 function App() {
